@@ -85,7 +85,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 <body class="bg-gray-100 flex items-center justify-center min-h-screen">
     <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-lg">
-        <h2 class="text-3xl font-bold text-center text-gray-800 mb-8">Create Your Account</h2>
+        <h1 class="text-3xl font-bold text-center text-gray-800 mb-8">Barangay San Isidro Management System</h1>
         <?php if (!empty($errors)): ?>
             <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-6 rounded">
                 <?php foreach ($errors as $error): ?>
