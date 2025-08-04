@@ -13,11 +13,12 @@ if (isset($_SESSION['user_id'])) {
     $stmt->close();
 }
 
-// Fetch announcements (sample data, replace with actual database query)
-$announcements = [
-    ['title' => 'Community Clean-Up Drive', 'content' => 'Join us on August 10, 2025, for a barangay-wide clean-up drive.', 'date' => '2025-08-01'],
-    ['title' => 'Emergency Preparedness Seminar', 'content' => 'Learn about disaster preparedness on August 15, 2025.', 'date' => '2025-08-02'],
-];
+// Fetch announcements from database
+$announcements = [];
+$result = $conn->query("SELECT title, content, date FROM announcements ORDER BY date DESC");
+while ($row = $result->fetch_assoc()) {
+    $announcements[] = $row;
+}
 ?>
 
 <!DOCTYPE html>
@@ -62,7 +63,7 @@ $announcements = [
                             <p class="text-gray-600 mt-2"><?php echo htmlspecialchars($announcement['content']); ?></p>
                             <p class="text-sm text-gray-500 mt-2">Posted on: <?php echo htmlspecialchars($announcement['date']); ?></p>
                         </div>
-                    <?php endif; ?>
+                    <?php endforeach; ?>
                 </div>
             <?php endif; ?>
         </div>
