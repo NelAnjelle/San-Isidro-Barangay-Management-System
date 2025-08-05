@@ -1,0 +1,66 @@
+2025-08-04 19:23:20 - Test login started
+2025-08-04 19:23:20 - Database connection successful
+2025-08-04 19:23:26 - Test login started
+2025-08-04 19:23:26 - Database connection successful
+2025-08-04 19:23:26 - Received: username='admin1', password=[hidden]
+2025-08-04 19:23:26 - Query executed, rows found: 1
+2025-08-04 19:23:26 - User found: ID=5, Username=admin1, Role=admin
+2025-08-04 19:23:26 - Password verification failed
+2025-08-04 19:23:46 - Test login started
+2025-08-04 19:23:46 - Database connection successful
+2025-08-04 19:23:46 - Received: username='admin2', password=[hidden]
+2025-08-04 19:23:46 - Query executed, rows found: 1
+2025-08-04 19:23:46 - User found: ID=6, Username=admin2, Role=admin
+2025-08-04 19:23:46 - Password verification failed
+2025-08-04 19:25:30 - Test login started
+2025-08-04 19:25:30 - Database connection successful
+2025-08-04 19:26:20 - Test login started
+2025-08-04 19:26:20 - Database connection successful
+2025-08-04 19:26:27 - Test login started
+2025-08-04 19:26:27 - Database connection successful
+2025-08-04 19:26:27 - Received: username='admin1', password=[hidden]
+2025-08-04 19:26:27 - Query executed, rows found: 1
+2025-08-04 19:26:27 - User found: ID=5, Username=admin1, Role=admin
+2025-08-04 19:26:27 - Password verification failed
+2025-08-04 19:26:38 - Test login started
+2025-08-04 19:26:38 - Database connection successful
+2025-08-04 19:26:38 - Received: username='admin2', password=[hidden]
+2025-08-04 19:26:38 - Query executed, rows found: 1
+2025-08-04 19:26:38 - User found: ID=6, Username=admin2, Role=admin
+2025-08-04 19:26:38 - Password verification failed
+2025-08-04 19:30:32 - Test login started
+2025-08-04 19:30:32 - Database connection successful
+2025-08-04 19:30:32 - Received: username='admin1', password=[hidden]
+2025-08-04 19:30:32 - Query executed, rows found: 1
+2025-08-04 19:30:32 - User found: ID=5, Username=admin1, Role=admin
+2025-08-04 19:30:32 - Password verification failed
+2025-08-04 19:30:40 - Test login started
+2025-08-04 19:30:40 - Database connection successful
+2025-08-04 19:30:40 - Received: username='admin1', password=[hidden]
+2025-08-04 19:30:40 - Query executed, rows found: 1
+2025-08-04 19:30:40 - User found: ID=5, Username=admin1, Role=admin
+2025-08-04 19:30:40 - Password verification failed
+2025-08-04 19:32:48 - Test login started
+2025-08-04 19:32:48 - Database connection successful
+2025-08-04 19:32:48 - Received: username='admin1', password=[hidden]
+2025-08-04 19:32:48 - Query executed, rows found: 1
+2025-08-04 19:32:48 - User found: ID=9, Username=admin1, Role=admin
+2025-08-04 19:32:48 - Password verification failed
+2025-08-04 19:35:23 - Test login started
+2025-08-04 19:35:23 - Database connection successful
+2025-08-04 19:35:23 - Received: username='admin1', password=[hidden]
+2025-08-04 19:35:23 - Query executed, rows found: 1
+2025-08-04 19:35:23 - User found: ID=9, Username=admin1, Role=admin
+2025-08-04 19:35:23 - Password verification failed
+2025-08-04 19:36:59 - Test login started
+2025-08-04 19:36:59 - Database connection successful
+2025-08-04 19:36:59 - Received: username='admin3', password=[hidden]
+2025-08-04 19:36:59 - Query executed, rows found: 1
+2025-08-04 19:36:59 - User found: ID=10, Username=admin3, Role=admin
+2025-08-04 19:36:59 - Password verification failed
+2025-08-04 19:39:42 - Test login started
+2025-08-04 19:39:42 - Database connection successful
+2025-08-04 19:39:42 - Received: username='admin1', password=[hidden]
+2025-08-04 19:39:42 - Query executed, rows found: 1
+2025-08-04 19:39:42 - User found: ID=11, Username=admin1, Role=admin
+2025-08-04 19:39:42 - Password verification failed

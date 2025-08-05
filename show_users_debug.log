@@ -1,0 +1,17 @@
+2025-08-04 19:44:46 - Show users script started
+2025-08-04 19:44:46 - Database connection successful
+2025-08-04 19:44:46 - Column: id, Type: int(11)
+2025-08-04 19:44:46 - Column: username, Type: varchar(50)
+2025-08-04 19:44:46 - Column: email, Type: varchar(100)
+2025-08-04 19:44:46 - Column: password, Type: varchar(255)
+2025-08-04 19:44:46 - Column: first_name, Type: varchar(50)
+2025-08-04 19:44:46 - Column: middle_name, Type: varchar(50)
+2025-08-04 19:44:46 - Column: last_name, Type: varchar(50)
+2025-08-04 19:44:46 - Column: suffix, Type: varchar(10)
+2025-08-04 19:44:46 - Column: phone_number, Type: varchar(11)
+2025-08-04 19:44:46 - Column: role, Type: enum('resident','admin')
+2025-08-04 19:44:46 - User ID: 2, Username: tatabadong, Hash Length: 60
+2025-08-04 19:44:46 - User ID: 3, Username: nel_anjelle, Hash Length: 60
+2025-08-04 19:44:46 - User ID: 4, Username: tatabadong111, Hash Length: 60
+2025-08-04 19:44:46 - User ID: 11, Username: admin1, Hash Length: 60
+2025-08-04 19:44:46 - User ID: 12, Username: admin3, Hash Length: 60

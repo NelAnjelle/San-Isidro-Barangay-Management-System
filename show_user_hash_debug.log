@@ -1,0 +1,12 @@
+2025-08-04 19:49:02 - Show user hash script started
+2025-08-04 19:49:02 - Database connection successful
+2025-08-04 19:49:02 - Password Column: Type=varchar(255), Null=NO
+2025-08-04 19:49:02 - User found: ID=11, Username=admin1, Hash Length=60
+2025-08-04 19:51:00 - Show user hash script started
+2025-08-04 19:51:00 - Database connection successful
+2025-08-04 19:51:00 - Password Column: Type=varchar(255), Null=NO
+2025-08-04 19:51:00 - User found: ID=11, Username=admin1, Hash Length=60
+2025-08-04 19:52:26 - Show user hash script started
+2025-08-04 19:52:26 - Database connection successful
+2025-08-04 19:52:26 - Password Column: Type=varchar(255), Null=NO
+2025-08-04 19:52:26 - User found: ID=11, Username=admin1, Hash Length=60

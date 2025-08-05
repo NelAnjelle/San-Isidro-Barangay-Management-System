@@ -1,0 +1,16 @@
+2025-08-05 11:27:03 - Admin login started
+2025-08-05 11:27:03 - Database connection successful
+2025-08-05 11:27:08 - Admin login started
+2025-08-05 11:27:08 - Database connection successful
+2025-08-05 11:27:10 - Admin login started
+2025-08-05 11:27:10 - Database connection successful
+2025-08-05 11:27:35 - Admin login started
+2025-08-05 11:27:35 - Database connection successful
+2025-08-05 11:27:35 - Received: username='admin', password=[hidden]
+2025-08-05 11:27:35 - Query executed, rows found: 1
+2025-08-05 11:27:35 - User found: ID=13, Username=admin, Role=admin, Hash Length=60
+2025-08-05 11:27:35 - Password verified, session set: admin_id=13
+2025-08-05 11:34:59 - Admin login started
+2025-08-05 11:34:59 - Database connection successful
+2025-08-05 11:36:54 - Admin login started
+2025-08-05 11:36:54 - Database connection successful
