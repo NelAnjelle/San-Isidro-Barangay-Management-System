@@ -16,6 +16,23 @@ $result = $stmt->get_result();
 $user = $result->fetch_assoc();
 $stmt->close();
 
+// Check for announcements table columns
+$columns = $conn->query("SHOW COLUMNS FROM announcements");
+$announcement_columns = [];
+while ($col = $columns->fetch_assoc()) {
+    $announcement_columns[] = $col['Field'];
+}
+$has_event_start_end = in_array('event_start_datetime', $announcement_columns) && in_array('event_end_datetime', $announcement_columns);
+$has_event_location = in_array('event_location', $announcement_columns);
+
+// Check for activities table columns
+$columns = $conn->query("SHOW COLUMNS FROM activities");
+$activity_columns = [];
+while ($col = $columns->fetch_assoc()) {
+    $activity_columns[] = $col['Field'];
+}
+$activity_date_column = in_array('date', $activity_columns) ? 'date' : (in_array('activity_date', $activity_columns) ? 'activity_date' : 'created_at');
+
 // Fetch recent certificate requests (limited to 3)
 $certificate_requests = [];
 $stmt = $conn->prepare("SELECT certificate_type, purpose, status, created_at FROM certificate_requests WHERE user_id = ? ORDER BY created_at DESC LIMIT 3");
@@ -51,14 +68,19 @@ $stmt->close();
 
 // Fetch recent announcements (limited to 3)
 $announcements = [];
-$result = $conn->query("SELECT title, content, date FROM announcements ORDER BY date DESC LIMIT 3");
+$query = "SELECT title, content, posted_at" . 
+         ($has_event_location ? ", event_location" : "") . 
+         ($has_event_start_end ? ", event_start_datetime, event_end_datetime" : "") . 
+         " FROM announcements ORDER BY " . ($has_event_start_end ? "event_start_datetime DESC" : "posted_at DESC") . " LIMIT 3";
+$result = $conn->query($query);
 while ($row = $result->fetch_assoc()) {
     $announcements[] = $row;
 }
 
 // Fetch recent activities (limited to 3)
 $activities = [];
-$result = $conn->query("SELECT name, description, date FROM activities ORDER BY date DESC LIMIT 3");
+$query = "SELECT name, description, $activity_date_column FROM activities ORDER BY $activity_date_column DESC LIMIT 3";
+$result = $conn->query($query);
 while ($row = $result->fetch_assoc()) {
     $activities[] = $row;
 }
@@ -71,6 +93,15 @@ while ($row = $result->fetch_assoc()) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - Barangay San Isidro Management System</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .dashboard-card {
+            animation: fadeIn 0.5s ease-out;
+        }
+    </style>
 </head>
 <body class="bg-gray-100 min-h-screen flex flex-col">
     <!-- Navigation Bar -->
@@ -94,27 +125,27 @@ while ($row = $result->fetch_assoc()) {
 
             <!-- Quick Links -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-                <a href="profile.php" class="bg-gray-50 p-4 rounded-md shadow-sm text-center hover:bg-gray-100">
+                <a href="profile.php" class="bg-gray-50 p-4 rounded-md shadow-sm text-center hover:bg-gray-100 dashboard-card">
                     <h3 class="text-lg font-medium text-gray-700">Manage Profile</h3>
                     <p class="text-gray-600">Update your personal information.</p>
                 </a>
-                <a href="certificate.php" class="bg-gray-50 p-4 rounded-md shadow-sm text-center hover:bg-gray-100">
+                <a href="certificate.php" class="bg-gray-50 p-4 rounded-md shadow-sm text-center hover:bg-gray-100 dashboard-card">
                     <h3 class="text-lg font-medium text-gray-700">Request Certificates</h3>
                     <p class="text-gray-600">Apply for barangay clearances or certificates.</p>
                 </a>
-                <a href="blotter.php" class="bg-gray-50 p-4 rounded-md shadow-sm text-center hover:bg-gray-100">
+                <a href="blotter.php" class="bg-gray-50 p-4 rounded-md shadow-sm text-center hover:bg-gray-100 dashboard-card">
                     <h3 class="text-lg font-medium text-gray-700">Report Incidents</h3>
                     <p class="text-gray-600">Submit and track blotter reports.</p>
                 </a>
-                <a href="services.php" class="bg-gray-50 p-4 rounded-md shadow-sm text-center hover:bg-gray-100">
+                <a href="services.php" class="bg-gray-50 p-4 rounded-md shadow-sm text-center hover:bg-gray-100 dashboard-card">
                     <h3 class="text-lg font-medium text-gray-700">Service Requests</h3>
                     <p class="text-gray-600">Request barangay services.</p>
                 </a>
-                <a href="announcements.php" class="bg-gray-50 p-4 rounded-md shadow-sm text-center hover:bg-gray-100">
+                <a href="announcements.php" class="bg-gray-50 p-4 rounded-md shadow-sm text-center hover:bg-gray-100 dashboard-card">
                     <h3 class="text-lg font-medium text-gray-700">View Announcements</h3>
                     <p class="text-gray-600">Stay updated with barangay news.</p>
                 </a>
-                <a href="activities.php" class="bg-gray-50 p-4 rounded-md shadow-sm text-center hover:bg-gray-100">
+                <a href="activities.php" class="bg-gray-50 p-4 rounded-md shadow-sm text-center hover:bg-gray-100 dashboard-card">
                     <h3 class="text-lg font-medium text-gray-700">Barangay Activities</h3>
                     <p class="text-gray-600">Explore community events.</p>
                 </a>
@@ -140,11 +171,11 @@ while ($row = $result->fetch_assoc()) {
                                 </thead>
                                 <tbody>
                                     <?php foreach ($certificate_requests as $request): ?>
-                                        <tr>
+                                        <tr class="dashboard-card">
                                             <td class="py-2 px-4 border-b"><?php echo htmlspecialchars($request['certificate_type']); ?></td>
                                             <td class="py-2 px-4 border-b"><?php echo htmlspecialchars($request['purpose']); ?></td>
                                             <td class="py-2 px-4 border-b"><?php echo htmlspecialchars($request['status']); ?></td>
-                                            <td class="py-2 px-4 border-b"><?php echo htmlspecialchars($request['created_at']); ?></td>
+                                            <td class="py-2 px-4 border-b"><?php echo htmlspecialchars(date('F j, Y, g:i A', strtotime($request['created_at']))); ?></td>
                                         </tr>
                                     <?php endforeach; ?>
                                 </tbody>
@@ -172,11 +203,11 @@ while ($row = $result->fetch_assoc()) {
                                 </thead>
                                 <tbody>
                                     <?php foreach ($blotter_reports as $report): ?>
-                                        <tr>
+                                        <tr class="dashboard-card">
                                             <td class="py-2 px-4 border-b"><?php echo htmlspecialchars($report['incident_type']); ?></td>
                                             <td class="py-2 px-4 border-b"><?php echo htmlspecialchars($report['description']); ?></td>
                                             <td class="py-2 px-4 border-b"><?php echo htmlspecialchars($report['status']); ?></td>
-                                            <td class="py-2 px-4 border-b"><?php echo htmlspecialchars($report['created_at']); ?></td>
+                                            <td class="py-2 px-4 border-b"><?php echo htmlspecialchars(date('F j, Y, g:i A', strtotime($report['created_at']))); ?></td>
                                         </tr>
                                     <?php endforeach; ?>
                                 </tbody>
@@ -204,11 +235,11 @@ while ($row = $result->fetch_assoc()) {
                                 </thead>
                                 <tbody>
                                     <?php foreach ($service_requests as $request): ?>
-                                        <tr>
+                                        <tr class="dashboard-card">
                                             <td class="py-2 px-4 border-b"><?php echo htmlspecialchars($request['service_type']); ?></td>
                                             <td class="py-2 px-4 border-b"><?php echo htmlspecialchars($request['description']); ?></td>
                                             <td class="py-2 px-4 border-b"><?php echo htmlspecialchars($request['status']); ?></td>
-                                            <td class="py-2 px-4 border-b"><?php echo htmlspecialchars($request['created_at']); ?></td>
+                                            <td class="py-2 px-4 border-b"><?php echo htmlspecialchars(date('F j, Y, g:i A', strtotime($request['created_at']))); ?></td>
                                         </tr>
                                     <?php endforeach; ?>
                                 </tbody>
@@ -226,10 +257,19 @@ while ($row = $result->fetch_assoc()) {
                     <?php else: ?>
                         <div class="space-y-6">
                             <?php foreach ($announcements as $announcement): ?>
-                                <div class="bg-gray-50 p-4 rounded-md shadow-sm">
+                                <div class="bg-gray-50 p-4 rounded-md shadow-sm dashboard-card">
                                     <h4 class="text-lg font-semibold text-gray-800"><?php echo htmlspecialchars($announcement['title']); ?></h4>
                                     <p class="text-gray-600 mt-2"><?php echo htmlspecialchars($announcement['content']); ?></p>
-                                    <p class="text-sm text-gray-500 mt-2">Posted on: <?php echo htmlspecialchars($announcement['date']); ?></p>
+                                    <p class="text-sm text-gray-500 mt-2">Posted on: <?php echo htmlspecialchars(date('F j, Y, g:i A', strtotime($announcement['posted_at']))); ?></p>
+                                    <?php if ($has_event_start_end && !empty($announcement['event_start_datetime'])): ?>
+                                        <p class="text-sm text-gray-500 mt-1">Event Start: <?php echo htmlspecialchars(date('F j, Y, g:i A', strtotime($announcement['event_start_datetime']))); ?></p>
+                                    <?php endif; ?>
+                                    <?php if ($has_event_start_end && !empty($announcement['event_end_datetime'])): ?>
+                                        <p class="text-sm text-gray-500 mt-1">Event End: <?php echo htmlspecialchars(date('F j, Y, g:i A', strtotime($announcement['event_end_datetime']))); ?></p>
+                                    <?php endif; ?>
+                                    <?php if ($has_event_location && !empty($announcement['event_location'])): ?>
+                                        <p class="text-sm text-gray-500 mt-1">Location: <?php echo htmlspecialchars($announcement['event_location']); ?></p>
+                                    <?php endif; ?>
                                 </div>
                             <?php endforeach; ?>
                         </div>
@@ -245,10 +285,10 @@ while ($row = $result->fetch_assoc()) {
                     <?php else: ?>
                         <div class="space-y-6">
                             <?php foreach ($activities as $activity): ?>
-                                <div class="bg-gray-50 p-4 rounded-md shadow-sm">
+                                <div class="bg-gray-50 p-4 rounded-md shadow-sm dashboard-card">
                                     <h4 class="text-lg font-semibold text-gray-800"><?php echo htmlspecialchars($activity['name']); ?></h4>
                                     <p class="text-gray-600 mt-2"><?php echo htmlspecialchars($activity['description']); ?></p>
-                                    <p class="text-sm text-gray-500 mt-2">Date: <?php echo htmlspecialchars($activity['date']); ?></p>
+                                    <p class="text-sm text-gray-500 mt-2">Date: <?php echo htmlspecialchars(date('F j, Y, g:i A', strtotime($activity[$activity_date_column]))); ?></p>
                                 </div>
                             <?php endforeach; ?>
                         </div>

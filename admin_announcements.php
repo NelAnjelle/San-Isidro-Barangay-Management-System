@@ -23,12 +23,23 @@ $success = '';
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['create'])) {
     $title = trim($_POST['title']);
     $content = trim($_POST['content']);
+    $event_start_datetime = trim($_POST['event_start_datetime']);
+    $event_end_datetime = trim($_POST['event_end_datetime']);
+    $event_location = trim($_POST['event_location']);
     
     if (empty($title) || empty($content)) {
         $errors[] = "Title and content are required.";
+    } elseif (empty($event_start_datetime)) {
+        $errors[] = "Event start date and time are required.";
+    } elseif (empty($event_end_datetime)) {
+        $errors[] = "Event end date and time are required.";
+    } elseif (strtotime($event_end_datetime) <= strtotime($event_start_datetime)) {
+        $errors[] = "Event end date and time must be after the start date and time.";
+    } elseif (empty($event_location)) {
+        $errors[] = "Event location is required.";
     } else {
-        $stmt = $conn->prepare("INSERT INTO announcements (title, content, admin_id) VALUES (?, ?, ?)");
-        $stmt->bind_param("ssi", $title, $content, $_SESSION['admin_id']);
+        $stmt = $conn->prepare("INSERT INTO announcements (title, content, admin_id, event_start_datetime, event_end_datetime, event_location) VALUES (?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("ssisss", $title, $content, $_SESSION['admin_id'], $event_start_datetime, $event_end_datetime, $event_location);
         if ($stmt->execute()) {
             $success = "Announcement created successfully.";
         } else {
@@ -51,14 +62,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete_id'])) {
     $stmt->close();
 }
 
-// Check for posted_at column
-$columns = $conn->query("SHOW COLUMNS FROM announcements LIKE 'posted_at'");
-$has_posted_at = $columns->num_rows > 0;
-
 // Fetch announcements
-$query = $has_posted_at 
-    ? "SELECT id, title, content, posted_at FROM announcements WHERE admin_id = " . $_SESSION['admin_id'] . " ORDER BY posted_at DESC"
-    : "SELECT id, title, content FROM announcements WHERE admin_id = " . $_SESSION['admin_id'] . " ORDER BY id DESC";
+$query = "SELECT id, title, content, event_start_datetime, event_end_datetime, event_location FROM announcements WHERE admin_id = " . $_SESSION['admin_id'] . " ORDER BY event_start_datetime DESC";
 $announcements = $conn->query($query);
 ?>
 
@@ -113,7 +118,7 @@ $announcements = $conn->query($query);
     <div class="container mx-auto mt-8 px-4 flex-grow">
         <div class="bg-white p-8 rounded-2xl shadow-xl animate-fadeIn">
             <div class="flex justify-center mb-6">
-                <img src="https://via.placeholder.com/150x50?text=Barangay+Logo" alt="Barangay San Isidro Logo" class="h-12">
+                <img src="img/logo.png" alt="Barangay San Isidro Logo" class="h-12">
             </div>
             <h2 class="text-3xl font-extrabold text-gray-900 mb-6 text-center">Announcement Management</h2>
             <p class="text-center text-gray-600 mb-6">Create and manage barangay announcements.</p>
@@ -149,6 +154,24 @@ $announcements = $conn->query($query);
                                   class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg text-gray-900 input-focus"
                                   placeholder="Enter announcement content"></textarea>
                     </div>
+                    <div>
+                        <label for="event_start_datetime" class="block text-sm font-medium text-gray-700">Event Start Date and Time</label>
+                        <input type="datetime-local" id="event_start_datetime" name="event_start_datetime" required
+                               class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg text-gray-900 input-focus"
+                               placeholder="Select event start date and time">
+                    </div>
+                    <div>
+                        <label for="event_end_datetime" class="block text-sm font-medium text-gray-700">Event End Date and Time</label>
+                        <input type="datetime-local" id="event_end_datetime" name="event_end_datetime" required
+                               class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg text-gray-900 input-focus"
+                               placeholder="Select event end date and time">
+                    </div>
+                    <div>
+                        <label for="event_location" class="block text-sm font-medium text-gray-700">Event Location</label>
+                        <input type="text" id="event_location" name="event_location" required
+                               class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg text-gray-900 input-focus"
+                               placeholder="Enter event location">
+                    </div>
                     <button type="submit"
                             class="w-full bg-green-600 text-white py-2 px-4 rounded-lg btn-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
                         Create Announcement
@@ -166,9 +189,9 @@ $announcements = $conn->query($query);
                                 <tr class="bg-gray-200">
                                     <th class="px-4 py-2 text-left text-sm font-medium text-gray-700">Title</th>
                                     <th class="px-4 py-2 text-left text-sm font-medium text-gray-700">Content</th>
-                                    <?php if ($has_posted_at): ?>
-                                        <th class="px-4 py-2 text-left text-sm font-medium text-gray-700">Posted At</th>
-                                    <?php endif; ?>
+                                    <th class="px-4 py-2 text-left text-sm font-medium text-gray-700">Event Start</th>
+                                    <th class="px-4 py-2 text-left text-sm font-medium text-gray-700">Event End</th>
+                                    <th class="px-4 py-2 text-left text-sm font-medium text-gray-700">Location</th>
                                     <th class="px-4 py-2 text-left text-sm font-medium text-gray-700">Action</th>
                                 </tr>
                             </thead>
@@ -177,9 +200,9 @@ $announcements = $conn->query($query);
                                     <tr class="border-t">
                                         <td class="px-4 py-2 text-sm text-gray-600"><?php echo htmlspecialchars($row['title']); ?></td>
                                         <td class="px-4 py-2 text-sm text-gray-600"><?php echo htmlspecialchars(substr($row['content'], 0, 100)) . (strlen($row['content']) > 100 ? '...' : ''); ?></td>
-                                        <?php if ($has_posted_at): ?>
-                                            <td class="px-4 py-2 text-sm text-gray-600"><?php echo htmlspecialchars($row['posted_at']); ?></td>
-                                        <?php endif; ?>
+                                        <td class="px-4 py-2 text-sm text-gray-600"><?php echo htmlspecialchars($row['event_start_datetime']); ?></td>
+                                        <td class="px-4 py-2 text-sm text-gray-600"><?php echo htmlspecialchars($row['event_end_datetime']); ?></td>
+                                        <td class="px-4 py-2 text-sm text-gray-600"><?php echo htmlspecialchars($row['event_location']); ?></td>
                                         <td class="px-4 py-2">
                                             <form method="POST" action="" onsubmit="return confirm('Are you sure you want to delete this announcement?');">
                                                 <input type="hidden" name="delete_id" value="<?php echo $row['id']; ?>">
