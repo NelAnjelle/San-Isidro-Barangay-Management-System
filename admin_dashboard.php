@@ -103,6 +103,10 @@ $pending_services = $conn->query("SELECT COUNT(*) FROM service_requests WHERE st
                     <h3 class="text-lg font-medium text-gray-700">Announcement Management</h3>
                     <p class="text-gray-600 text-sm">Create and manage barangay announcements.</p>
                 </a>
+                <a href="admin_officials.php" class="bg-gray-50 p-4 rounded-lg shadow-sm text-center feature-hover hover:bg-gray-100">
+                    <h3 class="text-lg font-medium text-gray-700">Officials Management</h3>
+                    <p class="text-gray-600 text-sm">Manage barangay officials' information.</p>
+                </a>
                 <a href="admin_other.php" class="bg-gray-50 p-4 rounded-lg shadow-sm text-center feature-hover hover:bg-gray-100">
                     <h3 class="text-lg font-medium text-gray-700">Other Features</h3>
                     <p class="text-gray-600 text-sm">Access additional barangay tools.</p>
