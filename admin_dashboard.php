@@ -60,7 +60,7 @@ $pending_services = $conn->query("SELECT COUNT(*) FROM service_requests WHERE st
     <div class="container mx-auto mt-8 px-4 flex-grow">
         <div class="bg-white p-8 rounded-2xl shadow-xl">
             <div class="flex justify-center mb-6">
-                <img src="https://via.placeholder.com/150x50?text=Barangay+Logo" alt="Barangay San Isidro Logo" class="h-12">
+                <img src="img/logo.png" alt="Barangay San Isidro Logo" class="h-12">
             </div>
             <h2 class="text-3xl font-extrabold text-gray-900 mb-6 text-center">Admin Dashboard</h2>
             <p class="text-center text-gray-600 mb-6">Manage barangay operations and services.</p>

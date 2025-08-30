@@ -79,7 +79,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body class="gradient-bg min-h-screen flex items-center justify-center">
     <div class="bg-white p-8 rounded-2xl shadow-xl w-full max-w-md mx-4 animate-fadeIn">
         <div class="flex justify-center mb-6">
-            <img src="https://via.placeholder.com/150x50?text=Barangay+Logo" alt="Barangay San Isidro Logo" class="h-12">
+            <img src="img/logo.png" alt="Barangay San Isidro Logo" class="h-12">
         </div>
         <h2 class="text-3xl font-extrabold text-gray-900 mb-6 text-center">Admin Login</h2>
         <p class="text-center text-gray-600 mb-6">Barangay San Isidro Management System</p>
