@@ -1,53 +1,38 @@
-# 🏘️ San Isidro Barangay Management System
+# 🌿 San Isidro Barangay Management System
 
-The **San Isidro Barangay Management System (BMS)** is a web-based platform designed to digitize and simplify barangay operations.  
-It provides **residents** with quick access to services while giving **administrators** a central dashboard to manage the barangay effectively.
+A **Barangay Management System** built for Barangay San Isidro to streamline administrative tasks, improve resident services, and organize barangay records.  
+The system allows administrators to manage residents, clearances, blotters, announcements, and other barangay-related operations.
 
 ---
 
 ## ✨ Features
 
-### 👨‍👩‍👧 Resident Portal
-- **Profile Management** – Update and manage resident information.  
-- **Certificate Requests** – Apply for barangay certificates (e.g., clearance, indigency).  
-- **Blotter Reports** – File and track incident reports.  
-- **Service Requests** – Submit and follow up on barangay service requests.  
-- **View Announcements** – Stay updated with barangay news and event schedules.  
-- **Barangay Activities** – Browse community projects and events.  
+### 👨‍💼 Admin Dashboard
+- **Resident Management** – Manage and update resident records.  
+- **Clearance Management** – Review, approve, and generate barangay certificates.  
+- **Blotter Management** – Record and handle incident reports.  
+- **Announcement Management** – Post and manage barangay announcements.  
+- **Officials Management** – Maintain barangay officials’ profiles and roles.  
+- **Other Features** – Extendable for additional barangay services.  
 
----
-
-### 🛠️ Admin Portal
-- **Dashboard Metrics**
-  - Total residents count  
-  - Pending certificate clearances  
-  - Pending blotter reports  
-  - Pending service requests  
-
-- **Resident Management** – Add, update, and delete resident records.  
-- **Clearance Management** – Review, approve, or reject certificate requests.  
-- **Blotter Management** – Record, update, and close incident reports.  
-- **Announcement Management** – Post barangay announcements and schedule events.  
-- **Officials Management** – Maintain barangay officials’ records.  
-- **Other Tools** – Extend functionality with additional barangay services.  
-
----
-
-## 📊 Dashboard Overview
-- Residents can see a **summary of their recent activity** (certificates, blotters, requests, announcements, activities).  
-- Admins can view **key barangay metrics at a glance** and access all management features.  
+### 📊 Dashboard Metrics
+- Total residents count  
+- Pending clearance requests  
+- Pending blotter reports  
+- Pending service requests  
 
 ---
 
 ## 🛠️ Tech Stack
 - **Frontend:** HTML, TailwindCSS  
-- **Backend:** PHP  
+- **Backend:** PHP (Procedural with MySQLi)  
 - **Database:** MySQL  
-- **Authentication:** PHP Sessions  
+- **Server:** Apache (XAMPP / Laragon / WAMP recommended)  
 
 ---
 
-## 🚀 Installation Guide
-1. Clone this repository:
-   ```bash
-   git clone https://github.com/your-username/barangay-management-system.git
+## ⚡ Installation
+
+### 1. Clone Repository
+```bash
+git clone https://github.com/Nel_Anjelle/barangay-management-system.git
