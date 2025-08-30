@@ -1,38 +1,39 @@
-# 🌿 San Isidro Barangay Management System
+# San Isidro Barangay Management System 🏘️
 
-A **Barangay Management System** built for Barangay San Isidro to streamline administrative tasks, improve resident services, and organize barangay records.  
-The system allows administrators to manage residents, clearances, blotters, announcements, and other barangay-related operations.
+The **San Isidro Barangay Management System** is a web-based application designed to digitize and streamline barangay operations.  
+It helps administrators manage **residents, certificates, blotters, announcements, and officials** in a centralized system,  
+making barangay services more efficient and accessible for the community.
 
 ---
 
 ## ✨ Features
 
-### 👨‍💼 Admin Dashboard
-- **Resident Management** – Manage and update resident records.  
-- **Clearance Management** – Review, approve, and generate barangay certificates.  
-- **Blotter Management** – Record and handle incident reports.  
-- **Announcement Management** – Post and manage barangay announcements.  
-- **Officials Management** – Maintain barangay officials’ profiles and roles.  
-- **Other Features** – Extendable for additional barangay services.  
+### 👨‍💼 Admin
+- Resident Management – Add, update, and manage resident records.  
+- Clearance Management – Review and approve certificate requests.  
+- Blotter Management – File, update, and resolve incident reports.  
+- Announcement Management – Create and publish barangay announcements.  
+- Officials Management – Manage barangay officials’ details and positions.  
+- Dashboard Metrics – Track total residents, pending clearances, blotters, and service requests.  
 
-### 📊 Dashboard Metrics
-- Total residents count  
-- Pending clearance requests  
-- Pending blotter reports  
-- Pending service requests  
+### 👨‍👩‍👦 Residents
+- Submit certificate requests.  
+- File blotter reports.  
+- Request barangay services.  
+- View latest announcements.  
 
 ---
 
 ## 🛠️ Tech Stack
-- **Frontend:** HTML, TailwindCSS  
-- **Backend:** PHP (Procedural with MySQLi)  
+- **Frontend:** HTML, CSS (Tailwind CSS)  
+- **Backend:** PHP  
 - **Database:** MySQL  
-- **Server:** Apache (XAMPP / Laragon / WAMP recommended)  
+- **Web Server:** Apache / XAMPP  
 
 ---
 
-## ⚡ Installation
-
-### 1. Clone Repository
-```bash
-git clone https://github.com/Nel_Anjelle/barangay-management-system.git
+## 📂 Database Setup
+1. Open **phpMyAdmin** (or any MySQL client).  
+2. Create a new database:
+   ```sql
+   CREATE DATABASE barangay_db;
